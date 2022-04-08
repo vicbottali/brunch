@@ -1,0 +1,7 @@
+{
+  "name": "brunch",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
