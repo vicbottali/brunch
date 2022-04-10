@@ -638,41 +638,60 @@ const nftAbi = [
     }
 ];
 
-class Web3Data extends React.Component<{}, { files: any[], metaData: any, web3Storage: any}> {
+class Web3Data extends React.Component<{}, { files: any[], name: string}> {
     pond: any;
     constructor(props: any) {
         super(props);
       // this.handleFileUpdate = this.h
-        const token: string = process.env.REACT_APP_WEB3STORAGE_TOKEN as string;
+        //const token: string = process.env.REACT_APP_WEB3STORAGE_TOKEN as string;
         this.state = {
             files: [],
-            metaData: {},
-            web3Storage: {}
+            name: ''
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleFileUpdate() {
-     
+    
+    }
 
+    handleChange(event: any) {
+        const currentState = {...this.state};
+        this.setState({...currentState , ...{ name: event.target.value }});
+    }
+
+    handleSubmit(event: any) {
+        alert('A name was submitted: ' + this.state.name);
+        event.preventDefault();
     }
 
     render() {
         return (
-            <FilePond
-                ref={ref => (this.pond = ref)}
-                files={this.state.files}
-                allowMultiple={true}
-                allowReorder={true}
-                maxFiles={3}
-                server="/api"
-                name="files"
-                onupdatefiles={fileItems => {
-                    // Set currently active file objects to this.state
-                    this.setState({
-                        files: fileItems.map(fileItem => fileItem.file)
-                    });
-                }}
-            />
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Name:
+                        <input type="text" value={this.state.name} onChange={this.handleChange}  />
+                    </label>
+                    <input type="submit" value="Mint" />
+                </form>
+                <FilePond
+                    ref={ref => (this.pond = ref)}
+                    files={this.state.files}
+                    allowMultiple={true}
+                    allowReorder={true}
+                    maxFiles={3}
+                    server="http://localhost:3000/upload"
+                    name="files"
+                    onupdatefiles={fileItems => {
+                        // Set currently active file objects to this.state
+                        this.setState({
+                            files: fileItems.map(fileItem => fileItem.file)
+                        });
+                    }}
+                />
+            </div>
 
         )
     }
