@@ -46,6 +46,8 @@ module.exports = {
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
      websocket: true,
+          gas: 10000000,
+          gasPrice: 20000000000,
           provider: () => new HDWalletProvider(`crash napkin when that matrix dinosaur brand sell marine rally wash jump`, `http://192.168.1.19:7545`),
     },
     // Another network with more advanced options...
